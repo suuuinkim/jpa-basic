@@ -38,14 +38,24 @@ public class JpaMain {
 //            조건이 까다로워 진다면?
 //            JPQL을 사용해야한다!
 //            객체를 대상으로 검색하는 객체 지향 쿼리
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
+//            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+//                    .setFirstResult(5)
+//                    .setMaxResults(8)
+//                    .getResultList();
+//
+//            for (Member member : result) {
+//                System.out.println("member.name = " + member.getName());
+//            }
 
-            for (Member member : result) {
-                System.out.println("member.name = " + member.getName());
-            }
+            Member member = new Member();
+            // 비영속
+            member.setId(100L);
+            member.setName("HelloJPA");
+            // 영속
+            System.out.println("=====BEFORE======");
+            em.persist(member); // db에 저장되는건 아님
+            System.out.println("=====AFTER======");
+
             tx.commit(); // 커밋을 해줘야 반영이 된다
 
         } catch (Exception e) {
