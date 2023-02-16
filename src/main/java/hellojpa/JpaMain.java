@@ -47,14 +47,28 @@ public class JpaMain {
 //                System.out.println("member.name = " + member.getName());
 //            }
 
-            Member member = new Member();
-            // 비영속
-            member.setId(100L);
-            member.setName("HelloJPA");
+//            Member member = new Member();
+//            // 비영속
+//            member.setId(101L);
+//            member.setName("HelloJPA");
+
+//            em.persist(member); // db에 저장되는건 아님 -> 1차 캐시에 저장됨
+
             // 영속
-            System.out.println("=====BEFORE======");
-            em.persist(member); // db에 저장되는건 아님
-            System.out.println("=====AFTER======");
+//            Member findMember1 = em.find(Member.class, 101L);
+//            Member findMember2 = em.find(Member.class, 101L); // 이미 findMember1(똑같은)이 1차 캐시 안에 있기 때문에 findMember2는 조회를 하지 않음!
+//            System.out.println("result = " + (findMember1 == findMember2)); // true 반환
+
+
+            // 영속
+            // jpa는 다시 set을 해줄 필요가 없다! Collection과 같다고 생각하자 "변경감지기능"
+            // jpa는 값을 바꾸면 트랙잭션 되는 커밋시점에 변경을 반영하는구나라고 생각하기!
+            Member member = em.find(Member.class, 150L);
+            member.setName("ZZZZZ");
+
+            if(member.getName().equals("ZZZZZ")){
+                em.persist(member);
+            }
 
             tx.commit(); // 커밋을 해줘야 반영이 된다
 
