@@ -63,12 +63,21 @@ public class JpaMain {
             // 영속
             // jpa는 다시 set을 해줄 필요가 없다! Collection과 같다고 생각하자 "변경감지기능"
             // jpa는 값을 바꾸면 트랙잭션 되는 커밋시점에 변경을 반영하는구나라고 생각하기!
-            Member member = em.find(Member.class, 150L);
-            member.setName("ZZZZZ");
+//            Member member = em.find(Member.class, 150L);
+//            member.setName("ZZZZZ");
+//
+//            if(member.getName().equals("ZZZZZ")){
+//                em.persist(member);
+//            }
 
-            if(member.getName().equals("ZZZZZ")){
-                em.persist(member);
-            }
+//            Member member = new Member(200L, "member200");
+//            em.persist(member);
+
+//             강제호출, 1차 캐시가 지워지는건 아님!
+//             플러시는 변경내용을 데이터베이스에 동기화 하는 것임!
+//
+//             em.flush();
+
 
             tx.commit(); // 커밋을 해줘야 반영이 된다
 
