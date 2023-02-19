@@ -78,7 +78,12 @@ public class JpaMain {
 //
 //             em.flush();
 
+            Member member = new Member();
+            member.setId(2L);
+            member.setUsername("B");
+            member.setRoleType(RoleType.ADMIN);
 
+            em.persist(member);
             tx.commit(); // 커밋을 해줘야 반영이 된다
 
         } catch (Exception e) {
