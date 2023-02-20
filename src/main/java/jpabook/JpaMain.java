@@ -3,6 +3,7 @@ package jpabook;
 import hellojpa.Member;
 import hellojpa.Team;
 import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,27 +21,14 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("TeamA");
-            // team.getMembers().add(member); 역방향(주인이 아닌방향)만 연관관계 설정하면 null값 들어감!!!
-            em.persist(team);
-
-            Member member = new Member();
-            member.setUsername("member1");
-            // member.changeTeam(team);
-            em.persist(member);
-
-            team.addMember(member); // 연관관계 편의메소드는 1에 넣어도 되고 n에 넣어도 됨
-
-            em.flush();
-            em.clear();
-
-            Team findTeam = em.find(Team.class, team.getId());
-            List<Member> members = findTeam.getMembers();
-
-            for(Member m : members){
-                System.out.println("m = " + m.getUsername());
-            }
+            Order order = new Order();
+            // 방법 1
+            // order.addOrderItem(new OrderItem());
+            // 방법 2
+            em.persist(order);
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            em.persist(orderItem);
 
             tx.commit(); // 커밋을 해줘야 반영이 된다
 

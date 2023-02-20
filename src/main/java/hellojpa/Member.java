@@ -2,7 +2,7 @@ package hellojpa;
 
 import javax.persistence.*;
 
-@Entity
+// @Entity
 public class Member {
 
     @Id
@@ -57,5 +57,5 @@ public class Member {
         team.getMembers().add(this); // 연관관계 편의 메소드
     }*/
 
-    
+
 }
