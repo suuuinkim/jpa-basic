@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -78,13 +77,13 @@ public class JpaMain {
 //
 //             em.flush();
 
-            Member member1 = new Member();
+            Member2 member1 = new Member2();
             member1.setUsername("A");
 
-            Member member2 = new Member();
+            Member2 member2 = new Member2();
             member2.setUsername("B");
 
-            Member member3 = new Member();
+            Member2 member3 = new Member2();
             member3.setUsername("C");
 
             System.out.println("=======================");

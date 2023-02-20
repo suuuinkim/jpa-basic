@@ -3,7 +3,7 @@ package jpabook.jpashop.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+//@Entity
 @Table(name = "ORDERS")
 public class Order {
     @Id @GeneratedValue
@@ -13,6 +13,8 @@ public class Order {
     @Column(name = "MEMBER_ID")
     private Long memberId; // 객체지향스럽지 않음
 
+    @ManyToMany
+    @JoinColumn(name="MEMBER_ID")
     private Member member;
     private LocalDateTime orderDate; // ORDER_DATE, order_date(스프링부트는 이 형식을 기본으로)
 
