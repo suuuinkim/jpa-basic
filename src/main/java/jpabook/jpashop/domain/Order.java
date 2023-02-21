@@ -21,6 +21,11 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery;
+
     private LocalDateTime orderDate; // ORDER_DATE, order_date(스프링부트는 이 형식을 기본으로)
 
     @Enumerated(EnumType.STRING)
