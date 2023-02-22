@@ -5,13 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Item {
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "DTYPE")
+public abstract class Item extends BaseEntity{
     @Id @GeneratedValue
     @Column(name = "ITEM_ID")
     private Long id;
     private String name;
     private int price;
     private int stockQuantity;
+
+    // private String DTYPE;
 
     @ManyToMany(mappedBy = "items") // 실무에서 다대다는 지양
     private List<Category> categorys = new ArrayList<>();

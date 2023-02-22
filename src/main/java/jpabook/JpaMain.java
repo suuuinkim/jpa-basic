@@ -2,6 +2,7 @@ package jpabook;
 
 import hellojpa.Member;
 import hellojpa.Team;
+import jpabook.jpashop.domain.Book;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 
@@ -21,14 +22,19 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Order order = new Order();
+//            Order order = new Order();
             // 방법 1
             // order.addOrderItem(new OrderItem());
             // 방법 2
-            em.persist(order);
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
-            em.persist(orderItem);
+//            em.persist(order);
+//            OrderItem orderItem = new OrderItem();
+//            orderItem.setOrder(order);
+//            em.persist(orderItem);
+
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("kim");
+            em.persist(book);
 
             tx.commit(); // 커밋을 해줘야 반영이 된다
 
