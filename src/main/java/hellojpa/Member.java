@@ -17,7 +17,8 @@ public class Member {
 
     private int age;
 
-    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY) // 프록시객체로 만든다
+    @ManyToOne(fetch = FetchType.EAGER) // 즉시 로딩 (실무에서는 지양해야됨)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
