@@ -10,10 +10,9 @@ public class Member extends BaseEntity{
     @Column(name = "MEMBER_ID")
     private Long id;
     private String name;
-    private String city;
-    private String street;
-    private String zipcode;
 
+    @Embedded // 명확하게 값타입이라는 걸 알려주기 위해 어노테이션 사용
+    private Address address;
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>(); // 데이터가 없어서 nullpointer가 나는걸 방지하는 등 여러 장점이 있다!
 
@@ -45,27 +44,11 @@ public class Member extends BaseEntity{
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
