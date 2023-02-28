@@ -1,9 +1,14 @@
 package hellojpa;
 
+import org.hibernate.Criteria;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Set;
 
@@ -142,44 +147,44 @@ public class JpaMain {
 //            findParent.getChildList().remove(0);
 
 
-            Member3 member = new Member3();
-            member.setUsrename("hello1");
-            member.setHomeAddress(new Address("city", "Street", "zipCode"));
-
-            // 값타입 컬렉션들은 라이프사이클이 같이 돌아감 왜냐하면 갑타입이기 때문에!!!
-            member.getFavoriteFood().add("치킨");
-            member.getFavoriteFood().add("피자");
-            member.getFavoriteFood().add("초밥");
-
-            member.getAddressHistory().add(new AddressEntity("seoul", "apple-street", "zipcode"));
-
-            em.persist(member);
-
-            // 디비에 값은 잇지만 깔끔한 상태로 조회!
-            em.flush();
-            em.clear();
-
-            System.out.println("================= START ==============");
-            Member3 findMember = em.find(Member3.class, member.getId());
-
-            // homeCity -> newCity
-            // 옳지 않은 예
-//            findMember.getHomeAddress().setCity("newCity");
-
-            // 옳은 예
-            // 완전히 교체해야됨!
-            Address a = findMember.getHomeAddress();
-            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
-
-            // 치킨 -> 한식
-            findMember.getFavoriteFood().remove("치킨");
-            findMember.getFavoriteFood().add("김치");
-
-            // 주소바꾸기
-            // equals의 중요성!!!
-            System.out.println("=============== START ==============");
-            findMember.getAddressHistory().remove(new Address("seoul", "apple-street", "zipcode")); // 오브젝트를 먼저 찾기
-            findMember.getAddressHistory().add(new AddressEntity("busan", "banana-street", "zipzipcode"));
+//            Member3 member = new Member3();
+//            member.setUsrename("hello1");
+//            member.setHomeAddress(new Address("city", "Street", "zipCode"));
+//
+//            // 값타입 컬렉션들은 라이프사이클이 같이 돌아감 왜냐하면 갑타입이기 때문에!!!
+//            member.getFavoriteFood().add("치킨");
+//            member.getFavoriteFood().add("피자");
+//            member.getFavoriteFood().add("초밥");
+//
+//            member.getAddressHistory().add(new AddressEntity("seoul", "apple-street", "zipcode"));
+//
+//            em.persist(member);
+//
+//            // 디비에 값은 잇지만 깔끔한 상태로 조회!
+//            em.flush();
+//            em.clear();
+//
+//            System.out.println("================= START ==============");
+//            Member3 findMember = em.find(Member3.class, member.getId());
+//
+//            // homeCity -> newCity
+//            // 옳지 않은 예
+////            findMember.getHomeAddress().setCity("newCity");
+//
+//            // 옳은 예
+//            // 완전히 교체해야됨!
+//            Address a = findMember.getHomeAddress();
+//            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
+//
+//            // 치킨 -> 한식
+//            findMember.getFavoriteFood().remove("치킨");
+//            findMember.getFavoriteFood().add("김치");
+//
+//            // 주소바꾸기
+//            // equals의 중요성!!!
+//            System.out.println("=============== START ==============");
+//            findMember.getAddressHistory().remove(new Address("seoul", "apple-street", "zipcode")); // 오브젝트를 먼저 찾기
+//            findMember.getAddressHistory().add(new AddressEntity("busan", "banana-street", "zipzipcode"));
 
             // 값타임 컬력션은 언제쓰는가?
             // 체크버튼이 있어서 체크체크 하는 경우
@@ -190,6 +195,29 @@ public class JpaMain {
             // 식별자 있음 | 식별자 없음
             // 생명 주기 관리 | 생명주기를 엔티티에 의존
             // 공유         | 공유하지 않는 것이 안전(복사해서 사용) -> 불변객체로 사용하는 것이 안전
+
+
+            // JPQL
+//            List<Member3> resultList = em.createQuery(
+//                    "select m from Member3 m where m.username like '%kim%'", Member3.class
+//            ).getResultList();
+//
+//            for (Member3 member : resultList) {
+//                System.out.println("member = " + member);
+//            }
+
+            // CriteriaBuilder
+            // 동적쿼리를 작성하기 좋다
+            // 실무에서 거의 사용 안함! 유지보수가 어려움! 왜냐하면 복잡하고 실용성이 없다
+//            CriteriaBuilder cb = em.getCriteriaBuilder();
+//            CriteriaQuery<Member3> query = cb.createQuery(Member3.class);
+//            Root<Member3> m = query.from(Member3.class);
+//            CriteriaQuery<Member3> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+//            List<Member3> resultList = em.createQuery(cq).getResultList();
+
+            // flush -> commit, query
+
+            //List<Member3> resultList = em.createNativeQuery("select MEMBER_ID, city, street, zipcode, USERNAME from Member3 ", Member3.class).getResultList();
 
             tx.commit(); // 커밋을 해줘야 반영이 된다
 

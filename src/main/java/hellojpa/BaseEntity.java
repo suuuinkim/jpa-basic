@@ -3,7 +3,7 @@ package hellojpa;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@MappedSuperclass // 매핑정보만 받는 부모클래스, 엔티티x
+//@MappedSuperclass // 매핑정보만 받는 부모클래스, 엔티티x
 public abstract class BaseEntity { // 추상클래스로 만드는 것이 좋음
 
     private String createdBy;

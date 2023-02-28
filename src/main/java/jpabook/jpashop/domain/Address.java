@@ -5,7 +5,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import java.util.Objects;
 
-@Embeddable // 값 타입은 Embeddable
+//@Embeddable // 값 타입은 Embeddable
 public class Address {
     @Column(length = 10)
     private String city;

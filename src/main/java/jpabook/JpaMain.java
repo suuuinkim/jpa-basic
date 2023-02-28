@@ -30,17 +30,17 @@ public class JpaMain {
 //            book.setAuthor("kim");
 //            em.persist(book);
 
-            Member member1 = new Member();
-            member1.setName("hello1");
-            em.persist(member1);
-
-            Member member2 = new Member();
-            member2.setName("hello2");
-            em.persist(member2);
-
-
-            em.flush();
-            em.clear();
+//            Member member1 = new Member();
+//            member1.setName("hello1");
+//            em.persist(member1);
+//
+//            Member member2 = new Member();
+//            member2.setName("hello2");
+//            em.persist(member2);
+//
+//
+//            em.flush();
+//            em.clear();
 
 //            Member m1 = em.find(Member.class, member1.getId());
 //            System.out.println("m1 === " + m1.getClass()); // jpabook.jpashop.domain.Member
@@ -49,10 +49,10 @@ public class JpaMain {
 //            System.out.println("reference = " + reference.getClass()); // jpabook.jpashop.domain.Member
 //            System.out.println("a == a : " + (m1 == reference)); // true JPA는 == 비교를 보장
 
-            Member referenceMember = em.getReference(Member.class, member1.getId());
-            System.out.println("referenceMember = " + referenceMember.getClass()); // Proxy
+//            Member referenceMember = em.getReference(Member.class, member1.getId());
+//            System.out.println("referenceMember = " + referenceMember.getClass()); // Proxy
             // referenceMember.getName(); // 강제 초기화
-            Hibernate.initialize(referenceMember); // 강제 초기화
+//            Hibernate.initialize(referenceMember); // 강제 초기화
             // 만약 영속성컨테이너에서 꺼낸다면??? detach, close, clear 동일
             // 더이상 관리 안함
             // no Session 오류가 남

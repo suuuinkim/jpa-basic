@@ -9,7 +9,7 @@ import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
 
-@Entity
+//@Entity
 public class Member3 {
 
     @Id @GeneratedValue
@@ -17,7 +17,7 @@ public class Member3 {
     private Long id;
 
     @Column(name = "USERNAME")
-    private String usrename;
+    private String username;
 
     @ElementCollection
     @CollectionTable(name = "FAVORITE_FOOD", joinColumns = @JoinColumn(name = "MEMBER_ID"))
@@ -54,12 +54,12 @@ public class Member3 {
         this.id = id;
     }
 
-    public String getUsrename() {
-        return usrename;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsrename(String usrename) {
-        this.usrename = usrename;
+    public void setUsername(String usrename) {
+        this.username = usrename;
     }
 
     public Period getWorkPeriod() {
