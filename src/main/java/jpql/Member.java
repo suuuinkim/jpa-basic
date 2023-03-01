@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 public class Member {
     @Id@GeneratedValue
@@ -13,10 +16,25 @@ public class Member {
 
     private int age;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
+    private MemberType type;
+
+    @Enumerated(STRING)
+    public MemberType getType() {
+        return type;
+    }
+
+    public void setType(MemberType type) {
+        this.type = type;
+    }
+
+    public void changeTeam(Team team){
+        this.team = team;
+        team.getMembers().add(this);
+    }
 
     public Long getId() {
         return id;
@@ -50,4 +68,13 @@ public class Member {
         this.team = team;
     }
 
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                ", team=" + team +
+                '}';
+    }
 }
