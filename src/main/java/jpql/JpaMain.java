@@ -21,13 +21,24 @@ public class JpaMain {
             team.setName("TeamA");
             em.persist(team);
 
-            Member member = new Member();
-            member.setUsername("관리자");
-            member.setAge(10);
-            member.setType(ADMIN);
-            em.persist(member);
+            Team teamB = new Team();
+            teamB.setName("TeamB");
+            em.persist(teamB);
 
-            member.setTeam(team);
+            Member member1 = new Member();
+            member1.setUsername("멤버1");
+            member1.setTeam(team);
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("멤버2");
+            member2.setTeam(team);
+            em.persist(member2);
+
+            Member member3 = new Member();
+            member3.setUsername("멤버3");
+            member3.setTeam(teamB);
+            em.persist(member3);
 
 //            TypedQuery<Member> query1 = em.createQuery("select m from Member m", Member.class);
 //            TypedQuery<String> query2 = em.createQuery("select m.username from Member m", String.class);
@@ -77,7 +88,19 @@ public class JpaMain {
 //            for (String s : resultList) {
 //                System.out.println("s = " + s);
 //            }
-            
+
+            // fetch 조인 (실무에서 가장 많이 사용)
+            // 지연로딩을 해도 fetch 조인이 먼저 실행됨
+            String query = "select distinct t from Team t join fetch t.members";
+            List<Team> resultList = em.createQuery(query, Team.class).getResultList();
+
+            // **주의 : 일대다 조인은 데이터가 뻥튀기 될 수 있다 (단 다대일은 아님)
+
+            for (Team team1 : resultList) {
+                System.out.println("team1 = " + team1.getName() + " " + team1.getMembers().size());
+            }
+
+
             tx.commit(); // 커밋을 해줘야 반영이 된다
 
         } catch (Exception e) {
