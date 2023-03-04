@@ -91,11 +91,13 @@ public class JpaMain {
 
             // fetch 조인 (실무에서 가장 많이 사용)
             // 지연로딩을 해도 fetch 조인이 먼저 실행됨
+//            패치조인의 한계
+//            1. 패치조인 대상에는 별칭을 줄 수 없다.
+//            2. 컬렉션을 fetch 조인하면 패이징 처리를 할 수 없다
             String query = "select distinct t from Team t join fetch t.members";
             List<Team> resultList = em.createQuery(query, Team.class).getResultList();
 
             // **주의 : 일대다 조인은 데이터가 뻥튀기 될 수 있다 (단 다대일은 아님)
-
             for (Team team1 : resultList) {
                 System.out.println("team1 = " + team1.getName() + " " + team1.getMembers().size());
             }
