@@ -94,13 +94,37 @@ public class JpaMain {
 //            패치조인의 한계
 //            1. 패치조인 대상에는 별칭을 줄 수 없다.
 //            2. 컬렉션을 fetch 조인하면 패이징 처리를 할 수 없다
-            String query = "select distinct t from Team t join fetch t.members";
-            List<Team> resultList = em.createQuery(query, Team.class).getResultList();
+//            String query = "select distinct t from Team t join fetch t.members";
+//            List<Team> resultList = em.createQuery(query, Team.class)
+//                    .getResultList();
+
+            // entity를 파라미터로 넘길 수 있다
+//            String query = "select m from Member m where m = :member";
+//            Member findMember = em.createQuery(query, Member.class)
+//                    .setParameter("member", member1)
+//                    .getSingleResult();
+
+//            List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class).setParameter("username", "회원1").getResultList();
+
+            // 벌크연산 예제
+            // 모든 회원의 나이를 20살로 바꾸기
+            int resultCount = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
+
+            System.out.println("resultCount = " + resultCount);
+
+            // 벌크 연산 주의
+            // 1. 영속성 컨텍스트를 무시하기 때문에 꼬일 수 있음
+            // 벌크 연산을 먼저 실행하고 영속성 컨텍스트 초기화 하는 과정을 거치기
+            
 
             // **주의 : 일대다 조인은 데이터가 뻥튀기 될 수 있다 (단 다대일은 아님)
-            for (Team team1 : resultList) {
-                System.out.println("team1 = " + team1.getName() + " " + team1.getMembers().size());
-            }
+//            for (Team team1 : resultList) {
+//                System.out.println("team1 = " + team1.getName() + " " + team1.getMembers().size());
+//            }
+
+            // Named
+            // 애플리케이션 로딩시점에 쿼리를 검증
 
 
             tx.commit(); // 커밋을 해줘야 반영이 된다
